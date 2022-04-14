@@ -1,43 +1,53 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import { useEffect, useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import ListProduct from './layouts/ListProduct'
+import ProductEdit from './layouts/ProductEdit'
+import ProductAdd from './layouts/ProductAdd'
+import { ProductType } from './Types/Products'
+import { create, list, remove, update } from './api/products'
+import Signup from './layouts/Signup'
+import Signin from './layouts/Signin'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [products, setProducts] = useState<ProductType[]>([])
 
+  useEffect(() => {
+    const getProducts = async () => {
+      const { data } = await list();
+      setProducts(data)
+    }
+    getProducts();
+  },[])
+
+  const onHandleRemove = async (id:number) => {
+    remove(id);
+    setProducts(products.filter(item => item.id !== id));
+  }
+  const onHandleAdd = async (product:any) => {
+    const {data} = await create(product)
+
+    setProducts([...products,data])
+  }
+  const onHanleUpdate = async (product:ProductType) => {
+    try {
+      const {data} = await update(product)
+    
+      setProducts(products.map(item => item.id === data.id ? product : item))
+    } catch (error) {
+      
+    }
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <Routes>
+        <Route path='/' >
+          <Route path='products' element={<ListProduct products={products}  onRemove={onHandleRemove}/>}/>
+          <Route path='products/:id/edit' element={<ProductEdit onUpdate={onHanleUpdate}/>}/>
+          <Route path='products/add' element={<ProductAdd onAdd={onHandleAdd} />}/>
+        </Route>
+        <Route path='signup' element={<Signup />}/>
+        <Route path='signin' element={<Signin />}/>
+      </Routes>
     </div>
   )
 }
