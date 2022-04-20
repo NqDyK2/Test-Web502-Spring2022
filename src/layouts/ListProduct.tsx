@@ -61,6 +61,11 @@ const ListProduct = (props: ListProductProps) => {
                     })}
                 </tbody>
             </table>
+            <Link to={"/products/add"}>
+                <button className="transition focus:outline-none duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-8 py-2 -ml-6 mb-1 mt-2 text-sm">
+                    Add More Product
+                </button>
+            </Link>
         </div>
     )
 }

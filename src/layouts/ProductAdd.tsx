@@ -1,6 +1,9 @@
 import React from 'react'
 import { useForm, SubmitHandler } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
+
 
 type Inputs = {
     name: string,
@@ -18,7 +21,7 @@ const ProductAdd = (props: ProductAddProps) => {
     const navigate = useNavigate()
     const onSubmit: SubmitHandler<Inputs> = (dataInputs) => {
         props.onAdd(dataInputs)
-        alert("Add more product success!!!");
+        toastr.success("Thêm thành công.")
         navigate("/products")
     }
     return (
@@ -32,19 +35,19 @@ const ProductAdd = (props: ProductAddProps) => {
                     </div>
                     <div className="mb-6">
                         <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Price</label>
-                        <input type="number" {...register('price')} id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                        {errors.name && <span className='text-red-600'>You need to enter this field</span>}
+                        <input type="number" {...register('price', { required: true })} id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                        {errors.name && <span className='text-red-600'>You need to enter this field</span> }
                     </div>
                     <div className="mb-6">
                         <label htmlFor="img" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Img</label>
-                        <input type="text" {...register('img')} id="img" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                        <input type="text" {...register('img', { required: true })} id="img" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                         {errors.name && <span className='text-red-600'>You need to enter this field</span>}
                     </div>
                     <div className="mb-6">
                         <label htmlFor="desc" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Desc</label>
                         <textarea id="desc" {...register('desc')} ></textarea><br />
                     </div>
-                    <button>Add More</button>
+                    <button className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Add More</button>
                 </div>
 
             </form>
