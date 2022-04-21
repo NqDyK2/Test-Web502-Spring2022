@@ -1,20 +1,26 @@
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-import { signup } from '../api/auth'
+import { useNavigate } from 'react-router-dom';
+import { signup } from '../api/auth';
+import toastr from "toastr";
+import "toastr/build/toastr.min.css";
 
-type TypeInputs = {
+type Inputs = {
     name: string,
     email: string,
-    password: string
+    password: string,
 }
+
+
 const Signup = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<TypeInputs>();
+    const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
     const navigate = useNavigate();
 
-    const onSubmit: SubmitHandler<TypeInputs> = data => {
+    const onSubmit: SubmitHandler<Inputs> = data => {
+
         signup(data);
-        navigate("/signin");
+        toastr.success("Đăng ký thành công")
+        navigate("/login")
     }
     return (
         <div>

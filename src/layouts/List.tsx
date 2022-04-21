@@ -1,16 +1,15 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import { ProductType } from "../Types/Products"
+import { Link } from 'react-router-dom';
+import { ProductsType } from '../types/Products'
 
-type ListProductProps = {
-    products: ProductType[];
-    onRemove: (id: number) => void
+type ListProps = {
+    products: ProductsType[];
+    onRemove: (id:number) => void
 }
 
-const ListProduct = (props: ListProductProps) => {
-
-    return (
-        <div>
+const List = (props: ListProps) => {
+  return (
+    <div>
             <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -67,7 +66,7 @@ const ListProduct = (props: ListProductProps) => {
                 </button>
             </Link>
         </div>
-    )
+  )
 }
 
-export default ListProduct
+export default List

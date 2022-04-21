@@ -1,4 +1,4 @@
-import { User } from "../Types/User";
+import { User } from "../types/User";
 
 export const authenticated = (user: User, next: () => void) => {
     localStorage.setItem('user', JSON.stringify(user));

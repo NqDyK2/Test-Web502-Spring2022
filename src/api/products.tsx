@@ -1,5 +1,4 @@
 import instance from "./instance";
-import { ProductType } from "../Types/Products";
 
 export const list = () => {
     const url = `/products`;
@@ -9,15 +8,15 @@ export const create = (products:any) => {
     const url = `/products`;
     return instance.post(url,products)
 }
-export const read = (id:any)=> {
+export const read = (id:any) => {
     const url = `/products/${id}`;
     return instance.get(url)
 }
-export const update = (product: any) => {
-    const url = `/products/${product.id}`;
-    return instance.patch(url, product);
+export const edit = (products:any) => {
+    const url = `/products/${products.id}`;
+    return instance.patch(url)
 }
 export const remove = (id:any) => {
-    const url = `/products/${id}`
+    const url = `/products/${id}`;
     return instance.delete(url)
 }
